@@ -93,8 +93,8 @@ public class ToJSON {
                     	  * following two lines are commented because they gave the error
                     	  * related to ESAPI.properties file not found,even though the file was present
                     	  */
-                    	 //temp = ESAPI.encoder().canonicalize(temp); //decoding data to base state
-                    	 //temp = ESAPI.encoder().encodeForHTML(temp); //encoding to be browser safe
+                    	 temp = ESAPI.encoder().canonicalize(temp); //decoding data to base state
+                    	 temp = ESAPI.encoder().encodeForHTML(temp); //encoding to be browser safe
                     	 obj.put(column_name, temp); //putting data into JSON object
                     	 
                     	 //obj.put(column_name, rs.getString(column_name));
