@@ -8,10 +8,16 @@ package com.youtube.rest.status;
  * @Version 1.0
  * @since Sep 12, 2014
  */
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+
+import com.youtube.dao.Oracle308tube;
 
 @Path("/v1/status")
 public class V1_status {
@@ -58,31 +64,37 @@ private static final String api_version = "00.02.00"; //version of the api
 	 * @return String -  returns the database date/time stamp
 	 * @throws Exception
 	 */
-/*	@Path("/database")
+	@Path("/database")
 	@GET
 	@Produces(MediaType.TEXT_HTML)
 	public String returnDatabaseStatus() throws Exception {
 		
-		String myString = null;
+		PreparedStatement query=null;
+		String myString=null;
 		String returnString = null;
-		JSONArray json = new JSONArray();
+		Connection conn=null;
 		
 		try {
 			
-			Schema308tube dao = new Schema308tube();
-			
-			json = dao.queryCheckDbConnection();
-			myString = json.toString();
+			conn=Oracle308tube.Oracle308tubeConn().getConnection();
+			query=conn.prepareStatement("select now()");
+			ResultSet rs=query.executeQuery();
+			while(rs.next()){
+				myString=rs.getString("now()");
+			}
 			
 			returnString = "<p>Database Status</p> " +
-				"<p>Database Date/Time return: " + myString + "</p>";
+				"<p>MySQL Database Date/Time return: " + myString + "</p>";
 			
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+		finally{
+			conn.close();
+		}
 		
 		return returnString; 
-	}*/
+	}
 	
 }
